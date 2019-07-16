@@ -39,7 +39,7 @@ const Name = styled.span`
   };
 `;
 
-const Address = styled.span`
+const Address = styled.a`
   margin-top: 8px;
   font-size: 13px;
   @media only screen and (min-width : 1200px) {
@@ -47,6 +47,18 @@ const Address = styled.span`
   }
   @media only screen and (min-width : 1600px) {
     font-size: 16px;
+  };
+`;
+
+const Distance = styled.span`
+  color: #474a4f;
+  margin-top: 3px;
+  font-size: 9px;
+  @media only screen and (min-width : 1200px) {
+    font-size: 11px;
+  }
+  @media only screen and (min-width : 1600px) {
+    font-size: 13px;
   };
 `;
 
@@ -93,15 +105,27 @@ interface Props {
   address: string;
   tags: string[];
   logoUrl: string;
+  meterDistance: number;
 }
 
-const ResturantBox: React.FC<Props> = ({name, logoUrl, address, tags}) => {
+const metersToMinutes = (meters: number) => {
+  const leftOver = meters % 100;
+  const number = meters/100;
+  
+  if (leftOver < 30) return Math.floor(number);
+  if (leftOver > 70) return Math.ceil(number);
+  return Math.floor(number) + '.5';
+  
+}
+
+const ResturantBox: React.FC<Props> = ({name, logoUrl, address, tags, meterDistance}) => {
   return (
     <Container>
       <Logo src={logoUrl} />
       <Column>
         <Name>{name}</Name>
-        <Address>{address}</Address>
+        <Address href={`https://maps.google.com/?q=${address}`} target='_blank'>{address.replace(', תל אביב יפו', '')}</Address>
+        <Distance>{`מרחק: ${metersToMinutes(meterDistance)} דקות מהמשרד`}</Distance>
         <TagsContainer>
           {tags.map(x => (
             <Tag>{x}</Tag>

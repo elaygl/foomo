@@ -7,6 +7,7 @@ interface Resturant {
   restaurantAddress: string;
   restaurantLogoUrl: string;
   restaurantCuisineKeysList: string[];
+  distanceFromUser: number;
 }
 
 const resturantsData = require('./resturants.json').restaurantsList as Resturant[];
@@ -42,6 +43,7 @@ const App: React.FC = () => {
             address={x.restaurantAddress}
             name={x.restaurantName}
             tags={x.restaurantCuisineKeysList}
+            meterDistance={Math.floor(x.distanceFromUser)}
           />
         ))}
       </RestaurantContainer>
