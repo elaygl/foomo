@@ -19,27 +19,32 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const Title = styled.h1`
-  font-size: 24px;
-`;
+const RestaurantContainer = styled.div`
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+`
 
-const ResturantLine = styled.span`
-  font-size: 14px;
+const Title = styled.h1`
+  font-size: 33px;
 `;
 
 const App: React.FC = () => {
   return (
     <Container>
       <Title>Welcome to FoodMe</Title>
-      {resturantsData.map(x => (
-        <ResturantBox
-          key={x.restaurantName}
-          logoUrl={x.restaurantLogoUrl}
-          address={x.restaurantAddress}
-          name={x.restaurantName}
-          tags={x.restaurantCuisineKeysList}
-        />
-      ))}
+      <RestaurantContainer>
+        {resturantsData.map(x => (
+          <ResturantBox
+            key={x.restaurantName}
+            logoUrl={x.restaurantLogoUrl}
+            address={x.restaurantAddress}
+            name={x.restaurantName}
+            tags={x.restaurantCuisineKeysList}
+          />
+        ))}
+      </RestaurantContainer>
     </Container>
   );
 };
