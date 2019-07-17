@@ -120,7 +120,7 @@ const metersToMinutes = (meters: number) => {
   return Math.floor(number) + '.5';
 };
 
-const ResturantBox: React.FC<Props> = ({name, logoUrl, address, tags, meterDistance}) => {
+const RestaurantBox: React.FC<Props> = ({name, logoUrl, address, tags, meterDistance}) => {
   return (
     <Container>
       <Logo src={logoUrl} />
@@ -140,4 +140,4 @@ const ResturantBox: React.FC<Props> = ({name, logoUrl, address, tags, meterDista
   );
 };
 
-export default ResturantBox;
+export default RestaurantBox;

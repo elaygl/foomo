@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import ResturantBox from './ResturantBox';
+import RestaurantBox from './RestaurantBox';
 
-interface Resturant {
+interface Restaurant {
   restaurantName: string;
   restaurantAddress: string;
   restaurantLogoUrl: string;
@@ -11,7 +11,7 @@ interface Resturant {
   restaurantId: number;
 }
 
-const resturantsData = require('./resturants.json').restaurantsList as Resturant[];
+const restaurantsData = require('./resturants.json').restaurantsList as Restaurant[];
 
 const Container = styled.div`
   height: 100vh;
@@ -37,8 +37,8 @@ const App: React.FC = () => {
     <Container>
       <Title>Welcome to Foomo</Title>
       <RestaurantContainer>
-        {resturantsData.map(x => (
-          <ResturantBox
+        {restaurantsData.map(x => (
+          <RestaurantBox
             key={x.restaurantId}
             logoUrl={x.restaurantLogoUrl}
             address={x.restaurantAddress}
