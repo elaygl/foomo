@@ -6,10 +6,12 @@ node_modules/
 .pnp.js
 
 # testing
-/coverage
+coverage/
 
 # production
-/build
+build/
+firebase/public/
+
 
 # misc
 .DS_Store
