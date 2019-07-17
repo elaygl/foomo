@@ -85,16 +85,18 @@ const Tag = styled.span`
 `;
 
 const Logo = styled.img`
-  border-radius: 75px;
+  border-radius: 50%;
   border: 1px solid #696969;
-  object-fit: cover;
+  object-fit: contain;
   width: 100px;
   height: 100px;
   margin-left: 16px;
+
   @media only screen and (min-width: 1200px) {
     width: 125px;
     height: 125px;
   }
+  
   @media only screen and (min-width: 1600px) {
     width: 150px;
     height: 150px;
