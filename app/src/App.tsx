@@ -34,7 +34,7 @@ const Title = styled.h1`
 const App: React.FC = () => {
   return (
     <Container>
-      <Title>Welcome to FoodMe</Title>
+      <Title>Welcome to Foomo</Title>
       <RestaurantContainer>
         {resturantsData.map(x => (
           <ResturantBox
