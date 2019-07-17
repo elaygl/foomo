@@ -1,32 +1,36 @@
-import React from 'react';
-import styled from 'styled-components';
-import * as changeCase from 'change-case';
+import React from "react";
+import Card from "@material-ui/core/Card";
+import styled from "styled-components";
+import * as changeCase from "change-case";
+import makeStyles from "@material-ui/styles/makeStyles";
+import useTheme from "@material-ui/styles/useTheme";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
 
-const Container = styled.div`
-  display: flex;
-  border: 4px solid #ddd;
-  border-radius: 8px;
-  margin-bottom: 16px;
-  margin-left: 2px;
-  margin-right: 2px;
-  align-items: center;
-  padding: 16px;
-  width: 300px;
-  height: 120px;
-  @media only screen and (min-width: 1200px) {
-    width: 350px;
-    height: 140px;
+const useStyles = makeStyles(theme => ({
+  card: {
+    display: "flex"
+  },
+  details: {
+    display: "flex"
+  },
+  content: {
+    flex: "1"
+  },
+  cover: {
+    width: 151
   }
-  @media only screen and (min-width: 1600px) {
-    width: 400px;
-    height: 160px;
-  }
-`;
+}));
 
 const Column = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
+`;
+
+const Row = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 const Name = styled.span`
@@ -69,8 +73,8 @@ const TagsContainer = styled.div`
   margin-top: 8px;
 `;
 
-const Tag = styled.span`
-  background: lightgrey;
+const Tag = styled.span<{ color?: string }>`
+  background: ${({ color = "lightgrey" }) => color};
   border-radius: 4px;
   margin-left: 4px;
   margin-top: 3px;
@@ -84,22 +88,14 @@ const Tag = styled.span`
   }
 `;
 
-const Logo = styled.img`
-  border-radius: 50%;
-  border: 1px solid #696969;
-  object-fit: contain;
-  width: 100px;
-  height: 100px;
-  margin-left: 16px;
+const NumOfReviews = styled.span`
+  font-size: 9px;
 
   @media only screen and (min-width: 1200px) {
-    width: 125px;
-    height: 125px;
+    font-size: 10px;
   }
-  
   @media only screen and (min-width: 1600px) {
-    width: 150px;
-    height: 150px;
+    font-size: 11px;
   }
 `;
 
@@ -109,6 +105,8 @@ interface Props {
   tags: string[];
   logoUrl: string;
   meterDistance: number;
+  reviewsRank: number;
+  numOfReviews: number;
 }
 
 const metersToMinutes = (meters: number) => {
@@ -117,26 +115,52 @@ const metersToMinutes = (meters: number) => {
 
   if (leftOver < 30) return Math.floor(number);
   if (leftOver > 70) return Math.ceil(number);
-  return Math.floor(number) + '.5';
+  return Math.floor(number) + ".5";
 };
 
-const RestaurantBox: React.FC<Props> = ({name, logoUrl, address, tags, meterDistance}) => {
+const RestaurantBox: React.FC<Props> = ({
+  name,
+  logoUrl,
+  address,
+  tags,
+  meterDistance,
+  reviewsRank,
+  numOfReviews
+}) => {
+  const classes = useStyles();
+  const theme = useTheme<any>();
+
   return (
-    <Container>
-      <Logo src={logoUrl} />
-      <Column>
-        <Name>{name}</Name>
-        <Address href={`https://www.google.com/maps?saddr=רוטשילד+39+תל+אביב&daddr=${address}`} target="_blank">
-          {address.replace(', תל אביב יפו', '')}
-        </Address>
-        <Distance>{`מרחק: ${metersToMinutes(meterDistance)} דקות מהמשרד`}</Distance>
-        <TagsContainer>
-          {tags.map((tag: string) => (
-            <Tag key={tag}>{changeCase.titleCase(tag)}</Tag>
-          ))}
-        </TagsContainer>
-      </Column>
-    </Container>
+    <Card className={classes.card}>
+      <CardMedia className={classes.cover} image={logoUrl} title="Cover" />
+
+      <CardContent className={classes.content}>
+        <Column>
+          <Row>
+            <Name>{name}</Name>
+
+            <div>
+              <NumOfReviews>({numOfReviews})</NumOfReviews>
+              <Tag color={theme.palette.primary[500]}>{reviewsRank}/10</Tag>
+            </div>
+          </Row>
+          <Address
+            href={`https://www.google.com/maps?saddr=רוטשילד+39+תל+אביב&daddr=${address}`}
+            target="_blank"
+          >
+            {address.replace(", תל אביב יפו", "")}
+          </Address>
+          <Distance>{`מרחק: ${metersToMinutes(
+            meterDistance
+          )} דקות מהמשרד`}</Distance>
+          <TagsContainer>
+            {tags.map((tag: string) => (
+              <Tag key={tag}>{changeCase.titleCase(tag)}</Tag>
+            ))}
+          </TagsContainer>
+        </Column>
+      </CardContent>
+    </Card>
   );
 };
 

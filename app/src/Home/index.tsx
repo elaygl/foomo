@@ -1,6 +1,18 @@
-import React from 'react';
-import styled from 'styled-components';
-import RestaurantBox from './RestaurantBox';
+import React from "react";
+import styled from "styled-components";
+
+import { createMuiTheme } from "@material-ui/core/styles";
+import orange from "@material-ui/core/colors/orange";
+import ThemeProvider from "@material-ui/styles/ThemeProvider";
+
+import RestaurantBox from "./RestaurantBox";
+import { Toolbar, AppBar } from "@material-ui/core";
+
+const theme = createMuiTheme({
+  palette: {
+    primary: orange
+  }
+});
 
 interface Restaurant {
   restaurantName: string;
@@ -9,9 +21,12 @@ interface Restaurant {
   restaurantCuisineKeysList: string[];
   distanceFromUser: number;
   restaurantId: number;
+  reviewsRank: number;
+  numOfReviews: number;
 }
 
-const restaurantsData = require('./resturants.json').restaurantsList as Restaurant[];
+const restaurantsData = require("./resturants.json")
+  .restaurantsList as Restaurant[];
 
 const Container = styled.div`
   height: 100vh;
@@ -22,33 +37,56 @@ const Container = styled.div`
 `;
 
 const RestaurantContainer = styled.div`
-  display: flex;
   flex: 1;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
+  display: grid;
+  grid-gap: 16px;
+
+  @media only screen and (max-width: 960px) {
+    grid-template-columns: auto;
+  }
+  @media only screen and (min-width: 961px) {
+    grid-template-columns: auto auto auto;
+  }
+  padding: 30px;
 `;
 
 const Title = styled.h1`
   font-size: 33px;
 `;
 
+const CenteredToolbar = styled(Toolbar)`
+  && {
+    background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
+    color: white;
+    justify-content: center;
+  }
+`;
+
 const App: React.FC = () => {
   return (
-    <Container>
-      <Title>Welcome to Foomo</Title>
-      <RestaurantContainer>
-        {restaurantsData.map(x => (
-          <RestaurantBox
-            key={x.restaurantId}
-            logoUrl={x.restaurantLogoUrl}
-            address={x.restaurantAddress}
-            name={x.restaurantName}
-            tags={x.restaurantCuisineKeysList}
-            meterDistance={Math.floor(x.distanceFromUser)}
-          />
-        ))}
-      </RestaurantContainer>
-    </Container>
+    <ThemeProvider theme={theme}>
+      <Container>
+        <AppBar position="relative">
+          <CenteredToolbar>
+            <Title>Welcome to Foomo</Title>
+          </CenteredToolbar>
+        </AppBar>
+        <RestaurantContainer>
+          {restaurantsData.map(x => (
+            <RestaurantBox
+              key={x.restaurantId}
+              logoUrl={x.restaurantLogoUrl}
+              address={x.restaurantAddress}
+              name={x.restaurantName}
+              tags={x.restaurantCuisineKeysList}
+              meterDistance={Math.floor(x.distanceFromUser)}
+              reviewsRank={x.reviewsRank}
+              numOfReviews={x.numOfReviews}
+            />
+          ))}
+        </RestaurantContainer>
+      </Container>
+    </ThemeProvider>
   );
 };
 
