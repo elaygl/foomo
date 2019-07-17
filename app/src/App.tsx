@@ -25,7 +25,7 @@ const RestaurantContainer = styled.div`
   flex: 1;
   flex-wrap: wrap;
   justify-content: space-evenly;
-`
+`;
 
 const Title = styled.h1`
   font-size: 33px;
