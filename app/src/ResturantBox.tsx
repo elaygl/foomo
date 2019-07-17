@@ -131,8 +131,8 @@ const ResturantBox: React.FC<Props> = ({name, logoUrl, address, tags, meterDista
         </Address>
         <Distance>{`מרחק: ${metersToMinutes(meterDistance)} דקות מהמשרד`}</Distance>
         <TagsContainer>
-          {tags.map(x => (
-            <Tag>{changeCase.titleCase(x)}</Tag>
+          {tags.map((tag: string) => (
+            <Tag key={tag}>{changeCase.titleCase(tag)}</Tag>
           ))}
         </TagsContainer>
       </Column>
