@@ -126,7 +126,7 @@ const ResturantBox: React.FC<Props> = ({name, logoUrl, address, tags, meterDista
       <Logo src={logoUrl} />
       <Column>
         <Name>{name}</Name>
-        <Address href={`https://maps.google.com/?q=${address}`} target="_blank">
+        <Address href={`https://www.google.com/maps?saddr=רוטשילד+39+תל+אביב&daddr=${address}`} target="_blank">
           {address.replace(', תל אביב יפו', '')}
         </Address>
         <Distance>{`מרחק: ${metersToMinutes(meterDistance)} דקות מהמשרד`}</Distance>
